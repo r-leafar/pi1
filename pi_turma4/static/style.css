@@ -34,6 +34,7 @@ header h1{
 .dpmenu ul li {
    display: inline;
    position: relative;
+   color:var(--cor-Primaria);
 }
 .dpmenu ul li a  {
     color:var(--cor-Primaria) ;

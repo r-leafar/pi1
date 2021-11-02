@@ -11,19 +11,18 @@ h2 {
 }
 div{
  background-color: rgba(16, 06, 82, 0.87);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform:translate(-50%,-50%) ;
-  padding: 80px;
-  border-radius: 15px;
-  color: rgb(0, 0, 0);
+ padding: 80px;
+ color: rgb(0, 0, 0);
+ width: 50%;
+ margin: auto;
+ border-radius: 100px;
  }
  input{
    padding: 15px;
    border: none;
    outline:none ;
    font-size: 15px;
+   width: 100%;
  }
  button{
    background-color:dodgerblue ;
