@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+header h1{
+    text-align:center ;
+}
+*{ 
+    margin: 0 ;
+    padding: 0 ;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+:root{
+    --cor-fundo : rgb(16, 6, 82);
+/*  --cor-hover : rgb(39, 27, 199);*/
+    --cor-Primaria: #fff;
+
+
+}
+.dpmenu { 
+    
+   list-style-type: none;
+   padding: 0;
+
+}
+
+.dpmenu ul{
+    background-color: var(--cor-fundo);
+    padding: 20px;
+
+
+}
+
+.dpmenu ul li {
+   display: inline;
+   position: relative;
+}
+.dpmenu ul li a  {
+    color:var(--cor-Primaria) ;
+    text-decoration: none;
+    padding: 20px ;
+    transition: background .4s;
+}
+
+.dpmenu ul li a:hover {
+    background-color: var(--cor-hover);
+    }
+
+/*Sub Menu*/
+
+.dpmenu ul ul {
+    display: none;
+    left: 0;
+    position:absolute;
+
+ }
+
+ .dpmenu ul li:hover ul {
+     display: block;
+    }
+
+    .dpmenu ul ul {
+        width: 150px;
+    
+     }
+
+    .dpmenu ul ul li a {
+        display: block;  
+     }
+ 
+
+.container-img{
+    text-align: center;
+    line-height: 80vh;
+}
+
+.container-img .center {
+    vertical-align:middle ;
+}

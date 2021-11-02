@@ -1,0 +1,18 @@
+<header>                        
+    <h1> Museu Natural Web </h1>
+</header>
+   
+<nav class="dpmenu">
+       <ul>
+           <li><a href="{{url_for('naturalweb.index')}}">Pagina inicial</a> </li>
+           <li><a href="#">Pontos Históricos/Turisticos</a>
+            <ul>
+                <li><a href="{{url_for('naturalweb.pontohistorico')}}">Pontos Históricos</a></li>
+                <li><a href="{{url_for('naturalweb.pontoturistico')}}">Pontos Turisticos</a></li>
+            </ul>
+
+         </li>
+           <li><a href="{{url_for('naturalweb.cadastro')}}">Cadastro</a> </li>
+       </ul>        
+   </nav>
+   {% block content %}{% endblock %}
