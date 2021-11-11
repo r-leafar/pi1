@@ -24,7 +24,12 @@
     </div>  
 
   <div style="float:right;display: block; background-color: cyan;">
-    asasa  
+    <h2>  USUARIOS CADASTRADOS</h2>
+    {% if usuarios %}
+      {% for usuario in usuarios %}
+      <span>{{usuario[0]}} - <a href="{{url_for('naturalweb.editarusuario',idusuario=usuario[0])}}" >{{usuario[1]}}</a> </span>
+      {% endfor %}
+    {% endif %}
   </div>
 
     {% endblock %}

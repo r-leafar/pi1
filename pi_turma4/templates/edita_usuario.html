@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='style_cadastro.css')}}">
+  <title>Cadastro</title>
+
+</head>
+
+<body>
+  {% extends "base.html" %}
+  {% block content %}
+  <div style="float:left">
+    <h2> EDITAR USUARIO</h2>
+    {% if usuario %}
+    <form method="POST" action="{{url_for('naturalweb.editarusuario',idusuario=usuario[0])}}">
+      <input name="user" type="text" placeholder="Nome" value="{{usuario[1]}}">
+      <br><br>
+      <input name="password" type="password" placeholder="Nova senha">
+      <br><br>
+      <input name="password_confirm" type="password" placeholder="Confirmação da senha">
+      <br><br>
+      <button>Enviar</button>  
+    </form>
+    {% else %}
+    <h3>Usuário não encontrado, por favor tente novamente.<h3></h3>
+    <button><a href="{{url_for('naturalweb.cadastrousuario')}}">Voltar</a></button>  
+    {% endif %}
+  </div>
+  {% endblock %}
