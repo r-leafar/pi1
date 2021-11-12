@@ -14,21 +14,11 @@ bp = Blueprint('naturalweb', __name__, url_prefix='/naturalweb')
 def index():
     return render_template("index.html");
 
-@bp.route('/teste')
-def teste():
+def get_lista_usuario():
     cur = get_db().execute("select * from usuario")
     rs = cur.fetchall()
     cur.close()
-
-    from werkzeug.security import generate_password_hash, check_password_hash
-  
-    print (rs[0]["nome"])
-    print (check_password_hash(rs[0][2],'1234'))
-
-    #print(generate_password_hash('123',method='pbkdf2:sha256'));
-
-    return "dxdsd"
-
+    return rs
 
 @bp.route('/pontoturistico')
 def pontoturistico():
@@ -61,13 +51,28 @@ def login():
             flash('Você digitou o usuário e/ou senha inválido')
             return redirect(url_for("naturalweb.login"));
 
-@bp.route('/cadastrousuario')
+@bp.route('/cadastrousuario',methods = ['POST', 'GET'])
 def cadastrousuario():
-    cur = get_db().execute("select * from usuario")
-    rs = cur.fetchall()
-    cur.close()
+    
+    if request.method == 'GET':
+        rs = get_lista_usuario()
+        return render_template("cadastro_usuario.html",usuarios=rs);
+    else:
+        # Validação se o usuario e senha estão corretos
+        if request.form['password']==request.form['password_confirm']:
+            from werkzeug.security import generate_password_hash
 
-    return render_template("cadastro_usuario.html",usuarios=rs);
+            cur = get_db().execute("INSERT INTO usuario (nome,senha) values('%s','%s')"%(request.form['user'],generate_password_hash(request.form['password'])))
+            get_db().commit()
+            
+            rs = get_lista_usuario()
+            flash('Usuario cadastrado com sucesso.')
+
+            return render_template("cadastro_usuario.html",usuarios=rs);
+        else:
+            flash('Senhas estão diferentes, por favor, verifique.')
+            return render_template("cadastro_usuario.html",usuarios=rs);
+    
 
 @bp.route('/editarusuario/<int:idusuario>',methods = ['GET','POST'])
 def editarusuario(idusuario):
@@ -82,7 +87,8 @@ def editarusuario(idusuario):
             cur = get_db().execute("UPDATE usuario set senha=? WHERE idusuario=?",[generate_password_hash(request.form['password']),idusuario])
             cur.close()
             get_db().commit()
-            return "atualizado confere"
+            flash('Dados do usuário alterado com sucesso.')
+            return render_template("cadastro_usuario.html", usuarios=get_lista_usuario())
         else:
             return "Não confere"
 

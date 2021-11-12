@@ -12,12 +12,22 @@
 <body>
   {% extends "base.html" %}
     {% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    {% for message in messages %}
+    <span style="color:#fff;background-color:chartreuse;">{{ message }}</span>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div style="float:left">
     <h2>   CADASTRO USUARIO</h2>
-    <form method="POST" action="{{url_for('naturalweb.login')}}">
+    <form method="POST" action="{{url_for('naturalweb.cadastrousuario')}}">
     <input name="user" type="text" placeholder="Nome">
     <br><br>
     <input name="password" type="password" placeholder="Senha"> 
+    <br><br>
+    <input name="password_confirm" type="password" placeholder="Confirmar a senha"> 
     <br><br>
       <button>Enviar</button> 
     </form>
