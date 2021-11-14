@@ -9,7 +9,7 @@ from minio import Minio
 from minio.error import S3Error
 from pi_turma4.db import get_db
 
-bp = Blueprint('naturalweb', __name__, url_prefix='/naturalweb')
+bp = Blueprint('naturalweb', __name__, url_prefix='/')
 
 
 def client_minio():
