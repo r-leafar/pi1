@@ -5,6 +5,11 @@ from flask import Flask
 def create_app(test_config=None):
 	# create and configure the app
 	app = Flask(__name__, instance_relative_config=True)
+	if os.environ.get("FLASK_ENV")=="development":
+		url_database = os.path.join(app.instance_path, 'pi_turma4.sqlite')
+	else:
+		url_database = "postgresql://postgres:@localhost/d6b04ndfie5o5s"
+
 	app.config.from_mapping(
 		SECRET_KEY='dev',
 		DATABASE=os.path.join(app.instance_path, 'pi_turma4.sqlite'),
