@@ -1,2 +1,2 @@
 release: flask init-db
-web: flask run
+web: gunicorn app:app
