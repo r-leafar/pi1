@@ -1,1 +1,3 @@
-print(env["DATABASE_URL"])
+from os import environ
+
+print(environ["DATABASE_URL"])
