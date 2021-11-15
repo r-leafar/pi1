@@ -14,21 +14,36 @@
     {% block content %}
  
 <div>
-  <h2>EDITA PONTO</h2>
-  <form method="POST" action="{{url_for('naturalweb.cadastroponto')}}" enctype="multipart/form-data">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+
+  {% for message in messages %}
+  <span style="color:rgb(172, 44, 44);background-color:chartreuse;">{{ message }}</span>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <h2>EDITAR PONTO</h2>
+  <form method="POST" action="{{url_for('naturalweb.editaponto',idponto=ponto['idponto'])}}" enctype="multipart/form-data">
   <label>Título:</label>
   <input name="nomeponto" type="text" placeholder="Título" value="{{ponto['titulo']}}" required>
     <br><br>
     <label>Tipo de ponto:</label>
     <select name="tipo">
+      {% if ponto["tipoponto"] == 1%}
+      <option value="1" selected>Turístico</option>
+      <option value="2">Histórico </option>
+      {% else%}
       <option value="1">Turístico</option>
-      <option value="2">Histórico</option>
+      <option value="2" selected>Histórico </option>
+      {% endif %}
     </select>
     <br><br>
     <label>Descricão:</label>
     <textarea name="descricao" rows="5" required>{{ponto['descricao']}}</textarea>
+    <img src="{{ponto['url']}}" width="200" height="150"></img>
+    </br>
     <label>Imagem:</label>
-    <input  name="nomeimg" type="file" required>
+    <input  name="nomeimg" type="file">
     <br><br>
     <button>Enviar</button>
   </form>

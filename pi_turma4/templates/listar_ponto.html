@@ -17,7 +17,7 @@
   <h2>LISTAR DE PONTO</h2>
   {% for p in pontos %}
   <h3>{{p["titulo"]}}</h3>
-  <a href="{{url_for('naturalweb.editaponto',idponto=p['idponto'])}}"><img src="{{p['nomeimg']}}" width="200" height="150"></a>
+  <a href="{{url_for('naturalweb.editaponto',idponto=p['idponto'])}}"><img src="{{p['url']}}" width="200" height="150"></a>
   {% endfor %}
 </div>
   
