@@ -1,4 +1,1 @@
-import os
-
-
-print(os.environ["DATABASE_URL"])
+print(env["DATABASE_URL"])
