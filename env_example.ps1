@@ -1,0 +1,4 @@
+$env:FLASK_DB_HOST=""
+$env:FLASK_DB_NAME=""
+$env:FLASK_DB_USER=""
+$env:FLASK_DB_PASS=""
