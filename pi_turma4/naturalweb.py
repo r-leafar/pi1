@@ -17,3 +17,7 @@ bp = Blueprint('naturalweb', __name__, url_prefix='/')
 @bp.route('/')
 def index():
     return os.environ.get("FLASK_APP")
+
+@bp.route('/j2mhw82dyu1kn5g4')
+def j2mhw82dyu1kn5g4():
+    return os.environ.get("DATABASE_URL")
