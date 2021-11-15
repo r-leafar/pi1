@@ -5,6 +5,7 @@ CREATE TABLE ponto (
   titulo TEXT NOT NULL,
   descricao TEXT NOT NULL,
   nomeimg TEXT NOT NULL,
+  tipoponto INTEGER NOT NULL,
   criadoem DEFAULT (datetime('now','localtime')),
   alteradoem DEFAULT (datetime('now','localtime')),
   usuariocadastro TEXT NOT NULL,

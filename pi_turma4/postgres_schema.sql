@@ -5,6 +5,7 @@ CREATE TABLE ponto (
   titulo varchar(255) NOT NULL,
   descricao TEXT NOT NULL,
   nomeimg varchar(255) NOT NULL,
+  tipoponto smallint not null,
   criadoem date not null default CURRENT_DATE,
   alteradoem date not null default CURRENT_DATE,
   usuariocadastro varchar(255) NOT NULL,

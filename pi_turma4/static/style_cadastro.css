@@ -4,6 +4,9 @@ h2,h3,label {
     color:#fff;
 }
 
+a:visited {
+  color: white;
+}
 
 .center {
     display: inline-block;

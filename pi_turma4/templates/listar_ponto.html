@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style_cadastro.css')}}">
+    <title>Cadastro</title>
+         
+</head>
+<body>
+  {% extends "base.html" %}
+    {% block content %}
+ 
+<div>
+  <h2>LISTAR DE PONTO</h2>
+  {% for p in pontos %}
+  <h3>{{p["titulo"]}}</h3>
+  <a href="{{url_for('naturalweb.editaponto',idponto=p['idponto'])}}"><img src="{{p['nomeimg']}}" width="200" height="150"></a>
+  {% endfor %}
+</div>
+  
+    {% endblock %}

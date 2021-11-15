@@ -17,7 +17,7 @@
   <h2>EDITA PONTO</h2>
   <form method="POST" action="{{url_for('naturalweb.cadastroponto')}}" enctype="multipart/form-data">
   <label>Título:</label>
-  <input name="nomeponto" type="text" placeholder="Título" required>
+  <input name="nomeponto" type="text" placeholder="Título" value="{{ponto['titulo']}}" required>
     <br><br>
     <label>Tipo de ponto:</label>
     <select name="tipo">
@@ -26,7 +26,7 @@
     </select>
     <br><br>
     <label>Descricão:</label>
-    <textarea name="descricao" rows="5" required></textarea>
+    <textarea name="descricao" rows="5" required>{{ponto['descricao']}}</textarea>
     <label>Imagem:</label>
     <input  name="nomeimg" type="file" required>
     <br><br>

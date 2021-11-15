@@ -14,6 +14,14 @@
     {% block content %}
  
 <div>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+
+  {% for message in messages %}
+  <span style="color:rgb(190, 54, 54);background-color:chartreuse;">{{ message }}</span>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
   <h2>CADASTRO DE PONTO</h2>
   <form method="POST" action="{{url_for('naturalweb.cadastroponto')}}" enctype="multipart/form-data">
     <label>Título:</label>

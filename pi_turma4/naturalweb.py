@@ -8,15 +8,16 @@ import uuid
 from minio import Minio
 from minio.error import S3Error
 from pi_turma4.db import get_db
+from datetime import timedelta
 
 bp = Blueprint('naturalweb', __name__, url_prefix='/')
 
 
 def client_minio():
     return  Minio(
-        "031c-191-7-151-185.ngrok.io",
+        "192.168.0.50:9000",
         access_key="univesp",
-        secret_key="j2mhw82dyu1kn5g4",
+        secret_key="kk]9pT$[C.T9NX}?",
         secure=False
     )
 
@@ -28,6 +29,29 @@ def get_lista_usuario():
     cur = get_db().execute("select * from usuario")
     rs = cur.fetchall()
     cur.close()
+    return rs
+
+def get_ponto(idponto):
+    sql = "select idponto,titulo,descricao,nomeimg,tipoponto from ponto WHERE idponto = ?"
+    cur = get_db().execute(sql,[idponto])
+    rs = cur.fetchall()
+    cur.close()
+    ponto= [dict(row) for row in rs]
+
+    return ponto[0]
+
+def get_lista_ponto(tipoponto=None):
+    
+    if tipoponto is None:
+        sql = "select idponto,titulo,descricao,nomeimg,tipoponto from ponto"
+        cur = get_db().execute(sql)
+        rs = cur.fetchall()
+        cur.close()
+    else:
+        sql = "select * from ponto where tipoponto=?"
+        cur = get_db().execute(sql,[tipoponto])
+        rs = cur.fetchall()
+        cur.close()
     return rs
 
 @bp.route('/pontoturistico')
@@ -80,6 +104,7 @@ def cadastrousuario():
 
             return render_template("cadastro_usuario.html",usuarios=rs);
         else:
+            rs = get_lista_usuario()
             flash('Senhas estão diferentes, por favor, verifique.')
             return render_template("cadastro_usuario.html",usuarios=rs);
     
@@ -118,10 +143,15 @@ def cadastroponto():
             try:
                 imgname = str(uuid.uuid4())
                 imgname = imgname+"."+uploaded_file.filename.split(".")[1]
-                client.put_object("univesp",imgname,uploaded_file,size)
-                cur = get_db().execute("INSERT INTO ponto (titulo,descricao,nomeimg,usuariocadastro) values(?,?,?,?)",[request.form['nomeponto'],request.form['descricao'],imgname,session["user"]])
+                
+                cur = get_db().execute("INSERT INTO ponto (titulo,descricao,tipoponto,nomeimg,usuariocadastro) values(?,?,?,?,?)",[request.form['nomeponto'],request.form['descricao'],request.form['tipo'],imgname,session["user"]])
                 get_db().commit()
+                
+                client.put_object("univesp",imgname,uploaded_file,size)
 
+                flash("Ponto cadastrado com sucesso.")
+
+                return render_template("cadastro_ponto.html");
             except S3Error as exc:
                  print("error occurred.", exc)
 
@@ -135,8 +165,28 @@ def cadastroponto():
         rs +=request.form['nomeponto']+"</br></br>"
         rs +=request.form['tipo']+"</br></br>"
         rs +=request.form['descricao']+"</br></br>"'''
+@bp.route('/editarponto/<int:idponto>',methods = ['GET','POST'])
+def editaponto(idponto):
+    if request.method == 'GET':
+        
+        ponto = get_ponto(idponto)
+        print(ponto)
+        return render_template("edita_ponto.html",ponto=ponto);
+    else:
+        pass
 
-        return "dsds"
+@bp.route('/listarponto/',methods = ['GET','POST'])
+def listarponto():
+    pontos= [dict(row) for row in get_lista_ponto()]
+    client = client_minio()
+    
+    for p in pontos:
+        p["nomeimg"] = client.get_presigned_url("GET","univesp",p["nomeimg"],expires=timedelta(days=1),)
+
+    
+    return render_template("listar_ponto.html",pontos=pontos)
+
+     
 
 @bp.route('/logout')
 def logout():
