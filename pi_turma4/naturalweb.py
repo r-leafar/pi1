@@ -16,9 +16,9 @@ bp = Blueprint('naturalweb', __name__, url_prefix='/')
 
 def client_minio():
     return Minio(
-        "192.168.0.50:9000",
-        access_key="univesp",
-        secret_key="kk]9pT$[C.T9NX}?",
+        os.getenv("MINIO_API"),
+        access_key=os.getenv("MINIO_ACCESS_KEY"),
+        secret_key=os.getenv("MINIO_SECRET_KEY"),
         secure=False
     )
 
@@ -86,9 +86,6 @@ def login():
     if request.method == 'GET':
         return render_template("login.html")
     else:
-        print("dlsmdslçkdlçs")
-        print(request.form['user'])
-
         cur = get_db().cursor()
         cur.execute("SELECT senha FROM usuario WHERE nome LIKE %s",
                     [request.form['user']])
