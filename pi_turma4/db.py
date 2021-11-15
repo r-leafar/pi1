@@ -3,13 +3,12 @@ import os
 import psycopg2
 from flask import current_app, g
 from flask.cli import with_appcontext
-import os
 
 
 def get_db():
     if 'db' not in g:
 
-        g.db = psycopg2.connect(os.getenv("DATABASE_URL"))
+        g.db = psycopg2.connect(os.environ.get("DATABASE_URL"))
 
     return g.db
 
