@@ -15,12 +15,15 @@ bp = Blueprint('naturalweb', __name__, url_prefix='/')
 
 
 def client_minio():
-    return Minio(
-        os.environ.get("MINIO_API"),
-        access_key=os.environ.get("MINIO_ACCESS_KEY"),
-        secret_key=os.environ.get("MINIO_SECRET_KEY"),
-        secure=False
-    )
+    try:
+        return Minio(
+            os.environ.get("MINIO_API"),
+            access_key=os.environ.get("MINIO_ACCESS_KEY"),
+            secret_key=os.environ.get("MINIO_SECRET_KEY"),
+            secure=False
+        )
+    except:
+        return None
 
 
 @bp.route('/')
@@ -57,7 +60,7 @@ def get_lista_ponto(tipoponto=None):
         cur.close()
     else:
         sql = "select * from ponto where tipoponto=%s"
-        cur = get_db().cursor()
+        cur = get_db().cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(sql, [tipoponto])
         rs = cur.fetchall()
         cur.close()
@@ -240,12 +243,44 @@ def listarponto():
 
     client = client_minio()
 
+    
     for p in pontos:
         p["url"] = client.get_presigned_url(
             "GET", "univesp", p["nomeimg"], expires=timedelta(days=1),)
 
-    return render_template("listar_ponto.html", pontos=pontos)
+    return render_template("listar_ponto_edicao.html", pontos=pontos)
 
+
+def get_ponto_info(idponto):
+    pontos = [dict(row) for row in get_lista_ponto(idponto)]
+
+    client = client_minio()
+
+    for p in pontos:
+        p["url"] = client.get_presigned_url(
+            "GET", "univesp", p["nomeimg"], expires=timedelta(days=1),)
+    return pontos
+        
+@bp.route('/pontohistorico/', methods=['GET', 'POST'])
+def pontos_historico():
+    # 1 - TURISTICO 2 - HISTORICO
+    pontos = get_ponto_info(2)
+    return render_template("ponto_exibicao.html",pontos=pontos)
+
+@bp.route('/pontoturistico/', methods=['GET', 'POST'])
+def pontos_turistico():
+    # 1 - TURISTICO 2 - HISTORICO
+    pontos = get_ponto_info(1)
+    return render_template("ponto_exibicao.html",pontos=pontos)
+
+@bp.route('/informacoesponto/<int:idponto>', methods=['GET', 'POST'])
+def informacoes_ponto(idponto):
+    
+    ponto = get_ponto(idponto)
+    client = client_minio()
+    ponto["url"] = client.get_presigned_url("GET", "univesp", ponto["nomeimg"], expires=timedelta(days=1),)
+    
+    return render_template("informacoes_ponto.html",ponto=ponto)
 
 @bp.route('/logout')
 def logout():
@@ -253,6 +288,3 @@ def logout():
     return render_template("index.html")
 
 
-@bp.route('/minioapi')
-def j2mhw82dyu1kn5g4():
-    return os.environ.get("MINIO_API")

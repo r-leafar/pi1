@@ -14,7 +14,7 @@
 <body>
   {% extends "base.html" %}
   {% block content %}
-  <div style="float:left">
+  <div style="float:left;">
     <h2> EDITAR USUARIO</h2>
     {% if usuario %}
     <form method="POST" action="{{url_for('naturalweb.editarusuario',idusuario=usuario[0])}}">

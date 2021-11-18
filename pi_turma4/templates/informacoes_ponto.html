@@ -33,10 +33,10 @@
 {% block content %}
     
 <div class="container">
-    <img class="center" src="https://cdn.pixabay.com/photo/2019/03/07/12/50/egypt-4040121_960_720.jpg " height="500" width="600" id="imagem"/>
+    <img class="center" src="{{ponto['url']}}" height="500" width="600" id="imagem"/>
     <div class="text">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aliquid quaerat. Numquam doloremque, architecto ea optio delectus, sequi deleniti magni aspernatur a earum dolorum asperiores ad hic tenetur quaerat quas!
-       <br>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id, fugit sequi delectus aperiam voluptatem cum ut iusto, quo reiciendis assumenda facilis nobis similique, veniam dolor eum nam voluptate aspernatur! Nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus possimus nostrum tempora necessitatibus minima id hic, blanditiis voluptatibus mollitia veniam, ullam laudantium saepe! Sunt, doloribus error illo laborum explicabo dolores.
+        <h3>{{ponto["titulo"]}}</h3>
+   {{ponto["descricao"]}}
     </p>
     </div>
 </div>
