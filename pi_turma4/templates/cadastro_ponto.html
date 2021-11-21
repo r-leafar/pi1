@@ -25,7 +25,7 @@
   <h2>CADASTRO DE PONTO</h2>
   <form method="POST" action="{{url_for('naturalweb.cadastroponto')}}" enctype="multipart/form-data">
     <label>Título:</label>
-  <input name="nomeponto" type="text" placeholder="Título" required>
+  <input name="nomeponto" type="text" onkeyup="this.value = this.value.toUpperCase();" placeholder="Título" required>
     <br><br>
     <label>Tipo de ponto:</label>
     <select name="tipo">

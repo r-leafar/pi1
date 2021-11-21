@@ -28,7 +28,22 @@ def client_minio():
 
 @bp.route('/')
 def index():
-    return render_template("index.html")
+    sql = "SELECT nomeimg from ponto order by idponto asc limit 3"
+    cur = get_db().cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cur.execute(sql)
+    rs = cur.fetchall()
+    cur.close()
+
+    pontos = [dict(row) for row in rs]
+    client = client_minio()
+    ponto = []
+    for p in pontos:
+        ponto.append(client.get_presigned_url("GET", "univesp", p["nomeimg"], expires=timedelta(days=1),))
+        
+    
+    #print(ponto)
+
+    return render_template("index.html",pontos=ponto)
 
 
 def get_lista_usuario():
@@ -265,13 +280,13 @@ def get_ponto_info(idponto):
 def pontos_historico():
     # 1 - TURISTICO 2 - HISTORICO
     pontos = get_ponto_info(2)
-    return render_template("ponto_exibicao.html",pontos=pontos)
+    return render_template("ponto_exibicao.html",pontos=pontos,title="PONTOS HISTÓRICOS")
 
 @bp.route('/pontoturistico/', methods=['GET', 'POST'])
 def pontos_turistico():
     # 1 - TURISTICO 2 - HISTORICO
     pontos = get_ponto_info(1)
-    return render_template("ponto_exibicao.html",pontos=pontos)
+    return render_template("ponto_exibicao.html",pontos=pontos,title="PONTOS TURÍSTICOS")
 
 @bp.route('/informacoesponto/<int:idponto>', methods=['GET', 'POST'])
 def informacoes_ponto(idponto):

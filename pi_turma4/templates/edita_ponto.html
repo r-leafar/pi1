@@ -25,7 +25,7 @@
   <h2>EDITAR PONTO</h2>
   <form method="POST" action="{{url_for('naturalweb.editaponto',idponto=ponto['idponto'])}}" enctype="multipart/form-data">
   <label>Título:</label>
-  <input name="nomeponto" type="text" placeholder="Título" value="{{ponto['titulo']}}" required>
+  <input name="nomeponto" type="text" onkeyup="this.value = this.value.toUpperCase();" placeholder="Título" value="{{ponto['titulo']}}" required>
     <br><br>
     <label>Tipo de ponto:</label>
     <select name="tipo">

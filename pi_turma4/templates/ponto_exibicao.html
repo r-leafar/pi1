@@ -18,6 +18,7 @@
 <body>
     {% extends "base.html" %}
     {% block content %}
+    <h3>{{title}}</h3>
     <div class="container-img">
         {% for p in pontos %}
         <a href="{{url_for('naturalweb.informacoes_ponto',idponto=p['idponto'])}}">
