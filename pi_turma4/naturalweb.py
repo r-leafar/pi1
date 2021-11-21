@@ -2,6 +2,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from flask.sessions import NullSession
+from flask.wrappers import Response
 from werkzeug.security import check_password_hash, generate_password_hash
 import os
 import uuid
@@ -10,6 +11,7 @@ from minio.error import S3Error
 from pi_turma4.db import get_db
 import psycopg2.extras
 from datetime import timedelta
+import json
 
 bp = Blueprint('naturalweb', __name__, url_prefix='/')
 
@@ -45,6 +47,17 @@ def index():
 
     return render_template("index.html",pontos=ponto)
 
+@bp.route('/search')
+def ajaxPesquisa():
+    cur = get_db().cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cur.execute("select idponto,titulo from ponto")
+    rs = cur.fetchall()
+    lista= []
+    for r in rs:
+        lista.append({"value":r["idponto"],"label":r["titulo"]})
+    
+    return Response(json.dumps(lista),mimetype='application/json')
+    
 
 def get_lista_usuario():
     cur = get_db().cursor()

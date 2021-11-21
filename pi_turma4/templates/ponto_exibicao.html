@@ -6,6 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        $(function () {
+
+
+
+            $.ajax({ url: "{{url_for('naturalweb.ajaxPesquisa')}}" }).done(function (data) {
+                $("#pesquisa").autocomplete({
+                    source: data, minLength: 2, select: function (e, ui) {
+                        location.href = "/informacoesponto/" + ui.item.value;
+                    }
+                }).autocomplete("instance")._renderItem = function (ul, item) {
+                    return $("<li>")
+                        .append("<div>" + item.label + "</div>")
+                        .appendTo(ul);
+                };
+            });
+
+
+
+
+        });
+    </script>
     <title>pontos Históricos</title>
     <style>
         h1 {
@@ -22,7 +47,8 @@
     <div class="container-img">
         {% for p in pontos %}
         <a href="{{url_for('naturalweb.informacoes_ponto',idponto=p['idponto'])}}">
-            <img class="center" src="{{p['url']}}" style="margin-left: 15px;margin-top: 15px;" height="200" width="300" /></a>
+            <img class="center" src="{{p['url']}}" style="margin-left: 15px;margin-top: 15px;" height="200"
+                width="300" /></a>
         {% endfor %}
     </div>
     {% endblock %}

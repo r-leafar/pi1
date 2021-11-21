@@ -1,31 +1,35 @@
-<header>                        
+<header>
     <h1> Museu Natural Web </h1>
 </header>
-   
-<nav class="dpmenu">
-       <ul>
-           <li><a href="{{url_for('naturalweb.index')}}">Home</a> </li>
 
-           <li><a href="#">Pontos Históricos/Turisticos</a>
+<nav class="dpmenu">
+    <ul>
+        <li><a href="{{url_for('naturalweb.index')}}">Home</a> </li>
+
+        <li><a href="#">Pontos Históricos/Turisticos</a>
             <ul>
                 <li><a href="{{url_for('naturalweb.pontos_historico')}}">Pontos Históricos</a></li>
                 <li><a href="{{url_for('naturalweb.pontos_turistico')}}">Pontos Turisticos</a></li>
             </ul>
 
-            </li>
-            {% if session["user"] %}
-            <li>Cadastrar
-                <ul>
-                    <li><a href="{{url_for('naturalweb.cadastrousuario')}}">Usuario</a></li>
-                    <li><a href="{{url_for('naturalweb.cadastroponto')}}">Pontos</a></li>
-                    <li><a href="{{url_for('naturalweb.listarponto')}}">Listar Pontos</a></li>
-                </ul>
-            </li>
+        </li>
+        {% if session["user"] %}
+        <li>Cadastrar
+            <ul>
+                <li><a href="{{url_for('naturalweb.cadastrousuario')}}">Usuario</a></li>
+                <li><a href="{{url_for('naturalweb.cadastroponto')}}">Pontos</a></li>
+                <li><a href="{{url_for('naturalweb.listarponto')}}">Listar Pontos</a></li>
+            </ul>
+        </li>
 
-            <li style="float:right"><a href="{{url_for('naturalweb.logout')}}">Log out</a>({{ session["user"] }})</li>
-            {% else %}
-           <li style="float:right"><a href="{{url_for('naturalweb.login')}}">Login</a> </li>
-           {% endif %}
-       </ul>        
-   </nav>
-   {% block content %}{% endblock %}
+        <li style="float:right"><a href="{{url_for('naturalweb.logout')}}">Log out</a>({{ session["user"] }})</li>
+        <input id="pesquisa" style="float:right" type="text">
+        <span style="color: white;float:right">Pesquisar</span>
+        {% else %}
+        <li style="float:right"><a href="{{url_for('naturalweb.login')}}">Login</a> </li>
+        <input style="float:right" type="text">
+        <span style="color: white;float:right">Pesquisar</span>
+        {% endif %}
+    </ul>
+</nav>
+{% block content %}{% endblock %}
