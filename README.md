@@ -17,7 +17,7 @@
 </div>
 
 <div align="center">
-  <a href="https://studio.youtube.com/video/R5WSauGd3dc/">
+  <a href="https://www.youtube.com/watch?v=R5WSauGd3dc">
   <img src="https://github.com/r-leafar/pi1/blob/master/readme_img1.png"/>
    <br>
 </div>
